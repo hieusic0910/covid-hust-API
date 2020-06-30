@@ -29,10 +29,10 @@ const extractData = (loc) => ({
  * @param {string} 	keys 	JHU data redis key
  * @param {Object} 	redis 	Redis instance
  */
-const jhudataV2 = async (keys, redis) => {
+const jhudata = async (keys, redis) => {
 	let response;
 	try {
-		const date = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Denver' }));
+		const date = new Date(new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }));
 		date.setDate(date.getDate() - 1);
 		const dd = date.getDate().toString().padStart(2, '0');
 		const mm = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -60,7 +60,7 @@ const jhudataV2 = async (keys, redis) => {
  * @param 	{Object} 	data 	All JHU data retrieved from redis store
  * @returns {Array} 			All data objects from JHU set for today with states summed over counties
  */
-const generalizedJhudataV2 = (data) => {
+const generalizedJhudata = (data) => {
 	const result = [];
 	const statesResult = {};
 
@@ -89,12 +89,12 @@ const generalizedJhudataV2 = (data) => {
  * @param 	{string} 	county	Name of a county in the USA
  * @returns {Array}				All data from today with county names the same as input, or all county data if no county param
  */
-const getCountyJhuDataV2 = (data, county = null) =>
+const getCountyJhuData = (data, county = null) =>
 	county ? data.filter((loc) => loc.county !== null && loc.county.toLowerCase() === county)
 		: data.filter((loc) => loc.county !== null);
 
 module.exports = {
-	jhudataV2,
-	generalizedJhudataV2,
-	getCountyJhuDataV2
+	jhudata,
+	generalizedJhudata,
+	getCountyJhuData
 };

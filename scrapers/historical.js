@@ -35,7 +35,7 @@ function formatRecoveredData(cases, recovered) {
  * @param 	{string}	keys 	config countries key
  * @param 	{Object}	redis 	Redis db
  */
-const historicalV2 = async (keys, redis) => {
+const historical = async (keys, redis) => {
 	const timelineIndex = 4;
 	let casesResponse, deathsResponse, recoveredResponse;
 	try {
@@ -88,7 +88,7 @@ const historicalV2 = async (keys, redis) => {
  * @param 	{string}	lastdays  	How many days to show always take lastest
  * @returns {Object}				The filtered historical data.
  */
-const getHistoricalDataV2 = (data, lastdays = 30) => {
+const getHistoricalData = (data, lastdays = 30) => {
 	lastdays = stringUtils.getLastDays(lastdays);
 	return data.map(country => {
 		delete country.countryInfo;
@@ -112,7 +112,7 @@ const getHistoricalDataV2 = (data, lastdays = 30) => {
  * @param 	{string}	lastdays  	How many days to show always take lastest
  * @returns {Object}				The filtered historical data.
  */
-const getHistoricalCountryDataV2 = (data, query, province = null, lastdays = 30) => {
+const getHistoricalCountryData = (data, query, province = null, lastdays = 30) => {
 	lastdays = stringUtils.getLastDays(lastdays);
 	const countryInfo = countryUtils.getCountryData(query);
 	const standardizedCountryName = stringUtils.wordsStandardize(countryInfo.country ? countryInfo.country : query);
@@ -160,7 +160,7 @@ const getHistoricalCountryDataV2 = (data, query, province = null, lastdays = 30)
  * @param	{string}	lastdays  	How many days to show always take lastest
  * @returns {Object}				The global deaths and cases
  */
-const getHistoricalAllDataV2 = (data, lastdays = 30) => {
+const getHistoricalAllData = (data, lastdays = 30) => {
 	lastdays = stringUtils.getLastDays(lastdays);
 	const cases = {};
 	const deaths = {};
@@ -184,9 +184,9 @@ const getHistoricalAllDataV2 = (data, lastdays = 30) => {
 
 
 module.exports = {
-	historicalV2,
-	getHistoricalDataV2,
-	getHistoricalCountryDataV2,
-	getHistoricalAllDataV2
+	historical,
+	getHistoricalData,
+	getHistoricalCountryData,
+	getHistoricalAllData
 
 };

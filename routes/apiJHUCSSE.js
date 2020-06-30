@@ -4,7 +4,7 @@ const { redis, keys, scraper } = require('./instances');
 const { splitQuery } = require('../utils/stringUtils');
 
 router.get('/jhucsse', async (req, res) =>
-	res.send(scraper.jhuLocations.generalizedJhudataV2(JSON.parse(await redis.get(keys.jhu_v2))))
+	res.send(scraper.jhuLocations.generalizedJhudata(JSON.parse(await redis.get(keys.jhu_v2))))
 );
 
 router.get('/jhucsse/counties/:county?', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/jhucsse/counties/:county?', async (req, res) => {
 	if (queriedCounties.length > 1) {
 		countyData = {};
 		for (const queriedcounty of queriedCounties) {
-			countyData[queriedcounty] = scraper.jhuLocations.getCountyJhuDataV2(
+			countyData[queriedcounty] = scraper.jhuLocations.getCountyJhuData(
 				JSON.parse(await redis.get(keys.jhu_v2)),
 				queriedcounty && queriedcounty.toLowerCase()
 			);
@@ -23,7 +23,7 @@ router.get('/jhucsse/counties/:county?', async (req, res) => {
 			}
 		}
 	} else {
-		countyData = scraper.jhuLocations.getCountyJhuDataV2(
+		countyData = scraper.jhuLocations.getCountyJhuData(
 			JSON.parse(await redis.get(keys.jhu_v2)),
 			county && county.toLowerCase()
 		);

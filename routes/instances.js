@@ -28,8 +28,8 @@ module.exports = {
 		executeScraper: async () => {
 			await Promise.all([
 				getWorldometerPage(keys, redis),
-				jhuLocations.jhudataV2(keys, redis),
-				historical.historicalV2(keys, redis)
+				jhuLocations.jhudata(keys, redis),
+				historical.historical(keys, redis)
 			]);
 			logger.info('Finished scraping!');
 		}

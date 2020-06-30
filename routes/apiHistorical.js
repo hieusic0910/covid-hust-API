@@ -5,7 +5,7 @@ const { splitQuery } = require('../utils/stringUtils');
 
 router.get('/historical', async (req, res) => {
 	const { lastdays } = req.query;
-	const allDataByCountry = scraper.historical.getHistoricalDataV2(
+	const allDataByCountry = scraper.historical.getHistoricalData(
 		JSON.parse(await redis.get(keys.historical_v2)),
 		lastdays
 	);
@@ -15,7 +15,7 @@ router.get('/historical', async (req, res) => {
 
 router.get('/historical/all', async (req, res) => {
 	const { lastdays } = req.query;
-	res.send(await scraper.historical.getHistoricalAllDataV2(JSON.parse(await redis.get(keys.historical_v2)), lastdays));
+	res.send(await scraper.historical.getHistoricalAllData(JSON.parse(await redis.get(keys.historical_v2)), lastdays));
 });
 
 router.get('/historical/:query/:province?', async (req, res) => {
@@ -28,7 +28,7 @@ router.get('/historical/:query/:province?', async (req, res) => {
 	// multiple countries no provinces allowed
 	if (countries.length > 1) {
 		countryData = countries.map((country) =>
-			scraper.historical.getHistoricalCountryDataV2(
+			scraper.historical.getHistoricalCountryData(
 				data,
 				country,
 				null,
@@ -38,7 +38,7 @@ router.get('/historical/:query/:province?', async (req, res) => {
 	} else if (provinces.length > 0) {
 		// provinces for one country
 		countryData = provinces.map((prov) =>
-			scraper.historical.getHistoricalCountryDataV2(
+			scraper.historical.getHistoricalCountryData(
 				data,
 				countries[0],
 				prov.trim(),
@@ -46,7 +46,7 @@ router.get('/historical/:query/:province?', async (req, res) => {
 			) || { message: 'Country not found or doesn\'t have any historical data' }
 		);
 	} else {
-		countryData = scraper.historical.getHistoricalCountryDataV2(
+		countryData = scraper.historical.getHistoricalCountryData(
 			data,
 			query,
 			province,
