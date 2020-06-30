@@ -34,7 +34,6 @@
     "dotenv": "^8.2.0",
     "ejs": "3.0.2",
     "express": "^4.16.3",
-    "heroku": "^7.42.1",
     "ioredis": "*",
     "mailgun-js": "^0.22.0",
     "redis": "^3.0.2",
